@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MedTechONE Knowledge Wheel</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f8f9fa;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  }
+  .wheel-wrap {
+    width: min(88vw, 88vh);
+    aspect-ratio: 1;
+    max-width: 760px;
+  }
+  svg { width: 100%; height: 100%; overflow: visible; }
+  .slice { cursor: pointer; transition: opacity 0.18s; }
+  .slice:hover { opacity: 0.82; }
+  .icon-img { mix-blend-mode: screen; pointer-events: none; }
+  .ext-label {
+    font-size: 12px;
+    font-weight: 400;
+    fill: #333;
+    dominant-baseline: middle;
+    cursor: pointer;
+  }
+  .ext-label:hover { fill: #555; }
+  .tick { stroke: #bbb; stroke-width: 1.2; }
+  .theme-label { font-size: 16px; font-weight: 700; fill: white; pointer-events: none; }
+  .centre-word {
+    font-size: 14px; font-weight: 700; fill: #444;
+    text-anchor: middle; dominant-baseline: middle;
+    pointer-events: none; letter-spacing: 0.8px;
+  }
+</style>
+</head>
+<body>
+<div class="wheel-wrap">
+<svg viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <filter id="sh">
+    <feDropShadow dx="0" dy="2" stdDeviation="5" flood-color="rgba(0,0,0,0.15)"/>
+  </filter>
+</defs>
+<g id="theme-ring"></g>
+<g id="wheel"></g>
+<circle cx="400" cy="400" r="93" fill="white" filter="url(#sh)"/>
+<text class="centre-word" x="400" y="390">How to create a</text>
+<text class="centre-word" x="400" y="408">medical device?</text>
+</svg>
+</div>
+
+<script>
+(function(){
+  var topics=[{"lines": ["Value proposition"], "color": "#3ed8dd", "url": "https://www.medtechone-learning.com/value-proposition"}, {"lines": ["Building a team"], "color": "#40cccd", "url": "https://www.medtechone-learning.com/building-teams"}, {"lines": ["Getting funding"], "color": "#5ab6cb", "url": "https://www.medtechone-learning.com/getting-funding"}, {"lines": ["Stakeholder", "engagement"], "color": "#ffc75a", "url": "https://www.medtechone-learning.com/stakeholders"}, {"lines": ["Reimbursement", "strategies"], "color": "#ffae5a", "url": "https://www.medtechone-learning.com/reimbursement"}, {"lines": ["Market entry", "& uptake"], "color": "#fd841f", "url": "https://www.medtechone-learning.com/market-entry"}, {"lines": ["Usability"], "color": "#f65bbd", "url": "https://www.medtechone-learning.com/usability"}, {"lines": ["Clinical trials"], "color": "#ef74cd", "url": "https://www.medtechone-learning.com/clinical-trials"}, {"lines": ["Pre-clinical trials"], "color": "#ff9ae9", "url": "https://www.medtechone-learning.com/pre-clinical-trials"}, {"lines": ["Developing", "software"], "color": "#8159e4", "url": "https://www.medtechone-learning.com/software"}, {"lines": ["Developing", "hardware"], "color": "#bb63e8", "url": "https://www.medtechone-learning.com/hardware"}, {"lines": ["Processing &", "managing data"], "color": "#d683f4", "url": "https://www.medtechone-learning.com/data"}, {"lines": ["Setting up", "a company"], "color": "#5479f7", "url": "https://www.medtechone-learning.com/setting-up-a-company"}, {"lines": ["Intellectual", "Property"], "color": "#50b7ea", "url": "https://www.medtechone-learning.com/intellectual-property"}, {"lines": ["Regulatory", "compliance"], "color": "#96dffa", "url": "https://www.medtechone-learning.com/regulatory-compliance"}];
+  var themes=[{"label": "Business", "start": 0, "count": 3, "color": "#40cccd"}, {"label": "Market", "start": 3, "count": 3, "color": "#fd841f"}, {"label": "Evaluation", "start": 6, "count": 3, "color": "#ef74cd"}, {"label": "Technology", "start": 9, "count": 3, "color": "#8c52ff"}, {"label": "Compliance", "start": 12, "count": 3, "color": "#5479f7"}];
+  var icons=["https://assets.softr-files.com/applications/2c4a9fc2-c0ab-4800-ad5f-4e2559a94598/assets/5daf2036-a50c-4d17-b3dd-9d72f7d95035.png", "https://assets.softr-files.com/applications/2c4a9fc2-c0ab-4800-ad5f-4e2559a94598/assets/5e8c305a-07c4-4393-b13c-8e979d74e78c.png", "https://assets.softr-files.com/applications/2c4a9fc2-c0ab-4800-ad5f-4e2559a94598/assets/77420a58-53e0-443d-b801-9cda041efef9.png", "https://assets.softr-files.com/applications/2c4a9fc2-c0ab-4800-ad5f-4e2559a94598/assets/23b0eec8-8ef1-4939-8e3f-07e2bc032f22.png", "https://assets.softr-files.com/applications/2c4a9fc2-c0ab-4800-ad5f-4e2559a94598/assets/71a2e8c9-1c7c-43d6-b1f3-b3f36331dd7d.png", "https://assets.softr-files.com/applications/2c4a9fc2-c0ab-4800-ad5f-4e2559a94598/assets/8820700d-dcab-431d-a212-b28047788278.png", "https://assets.softr-files.com/applications/2c4a9fc2-c0ab-4800-ad5f-4e2559a94598/assets/e2e5d8a1-7d25-4cde-80b9-0217fbe3688d.png", "https://assets.softr-files.com/applications/2c4a9fc2-c0ab-4800-ad5f-4e2559a94598/assets/6622b281-5087-4de4-ba49-52492660dc0d.png", "https://assets.softr-files.com/applications/2c4a9fc2-c0ab-4800-ad5f-4e2559a94598/assets/d754c40a-0982-44db-93b8-82c0633d91e5.png", "https://assets.softr-files.com/applications/2c4a9fc2-c0ab-4800-ad5f-4e2559a94598/assets/3b2bcc96-ea4a-4b62-8d4c-a5330c9b18cd.png", "https://assets.softr-files.com/applications/2c4a9fc2-c0ab-4800-ad5f-4e2559a94598/assets/959711be-daaf-4b1a-ab8f-42eae61aca2e.png", "https://assets.softr-files.com/applications/2c4a9fc2-c0ab-4800-ad5f-4e2559a94598/assets/f2093b1f-2da1-4edc-ac5d-0aaff6619fdf.png", "https://assets.softr-files.com/applications/2c4a9fc2-c0ab-4800-ad5f-4e2559a94598/assets/61325ffd-6fca-4866-943d-79b453fd3f33.png", "https://assets.softr-files.com/applications/2c4a9fc2-c0ab-4800-ad5f-4e2559a94598/assets/a2e1ed38-bdfe-498a-94de-750f52c6e036.png", "https://assets.softr-files.com/applications/2c4a9fc2-c0ab-4800-ad5f-4e2559a94598/assets/55dfc1f1-88fa-437c-bb03-0ffdc217ee8a.png"];
+
+  var CX=400,CY=400,OUTER_R=270,INNER_R=155,ICON_R=213,ICON_SIZE=44;
+  var THEME_OUT=153,THEME_IN=95,TICK_IN=277,TICK_OUT=290;
+  var N=15,SLICE_ANG=(2*Math.PI)/N,START=-Math.PI/2,LINE_H=14;
+  var ICON_SIZES={3:52,4:52};
+  var NS='http://www.w3.org/2000/svg';
+  var gW=document.getElementById('wheel');
+  var gTh=document.getElementById('theme-ring');
+
+  function pt(r,a){return[CX+r*Math.cos(a),CY+r*Math.sin(a)];}
+
+  function arcPath(i,ir,or_){
+    var a1=START+i*SLICE_ANG,a2=START+(i+1)*SLICE_ANG;
+    var p1=pt(ir,a1),p2=pt(or_,a1),p3=pt(or_,a2),p4=pt(ir,a2);
+    return 'M'+p1[0]+' '+p1[1]+'L'+p2[0]+' '+p2[1]
+          +'A'+or_+' '+or_+' 0 0 1 '+p3[0]+' '+p3[1]
+          +'L'+p4[0]+' '+p4[1]+'A'+ir+' '+ir+' 0 0 0 '+p1[0]+' '+p1[1]+'Z';
+  }
+
+  function themeArcPath(s,c,ir,or_){
+    var a1=START+s*SLICE_ANG,a2=START+(s+c)*SLICE_ANG;
+    var p1=pt(ir,a1),p2=pt(or_,a1),p3=pt(or_,a2),p4=pt(ir,a2);
+    var lg=c*SLICE_ANG>Math.PI?1:0;
+    return 'M'+p1[0]+' '+p1[1]+'L'+p2[0]+' '+p2[1]
+          +'A'+or_+' '+or_+' 0 '+lg+' 1 '+p3[0]+' '+p3[1]
+          +'L'+p4[0]+' '+p4[1]+'A'+ir+' '+ir+' 0 '+lg+' 0 '+p1[0]+' '+p1[1]+'Z';
+  }
+
+  function el(tag,attrs){
+    var e=document.createElementNS(NS,tag);
+    for(var k in attrs)e.setAttribute(k,attrs[k]);
+    return e;
+  }
+
+  /* Theme ring */
+  themes.forEach(function(th){
+    gTh.appendChild(el('path',{d:themeArcPath(th.start,th.count,THEME_IN,THEME_OUT),fill:th.color,stroke:'white','stroke-width':'2'}));
+    var aMid=START+(th.start+th.count/2)*SLICE_ANG;
+    var midR=(THEME_IN+THEME_OUT)/2;
+    var halfSpan=th.count*SLICE_ANG/2*0.78;
+    var aS=aMid-halfSpan,aE=aMid+halfSpan;
+    var lg=(aE-aS)>Math.PI?1:0;
+    var flip=Math.sin(aMid)>0.05;
+    var ps=pt(midR,aS),pe=pt(midR,aE);
+    var arcD=flip
+      ?'M'+pe[0]+' '+pe[1]+'A'+midR+' '+midR+' 0 '+lg+' 0 '+ps[0]+' '+ps[1]
+      :'M'+ps[0]+' '+ps[1]+'A'+midR+' '+midR+' 0 '+lg+' 1 '+pe[0]+' '+pe[1];
+    var pid='tp'+th.label.replace(/[^a-z]/gi,'');
+    gTh.appendChild(el('path',{id:pid,d:arcD,fill:'none'}));
+    var txt=el('text',{class:'theme-label'});
+    var tp=el('textPath',{href:'#'+pid,startOffset:'50%','text-anchor':'middle','dominant-baseline':'middle','font-size':'16','font-weight':'700','fill':'white'});
+    tp.textContent=th.label;
+    txt.appendChild(tp);
+    gTh.appendChild(txt);
+  });
+
+  /* Topic slices */
+  topics.forEach(function(t,i){
+    var aMid=START+(i+0.5)*SLICE_ANG;
+    var cosA=Math.cos(aMid);
+
+    var path=el('path',{d:arcPath(i,INNER_R,OUTER_R),fill:t.color,stroke:'white','stroke-width':'2.5',class:'slice'});
+    (function(u){path.addEventListener('click',function(){location.href=u;});})(t.url);
+    gW.appendChild(path);
+
+    var sz=ICON_SIZES[i]!==undefined?ICON_SIZES[i]:ICON_SIZE;
+    var ic=pt(ICON_R,aMid);
+    gW.appendChild(el('image',{href:icons[i],x:ic[0]-sz/2,y:ic[1]-sz/2,width:sz,height:sz,class:'icon-img'}));
+
+    var t1=pt(TICK_IN,aMid),t2=pt(TICK_OUT,aMid);
+    gW.appendChild(el('line',{x1:t1[0],y1:t1[1],x2:t2[0],y2:t2[1],class:'tick'}));
+
+    var lp=pt(TICK_OUT+12,aMid);
+    var anchor=cosA>0.15?'start':cosA<-0.15?'end':'middle';
+    var totalH=(t.lines.length-1)*LINE_H;
+    var startY=lp[1]-totalH/2;
+    var labelEl=el('text',{'text-anchor':anchor,'font-size':'12',class:'ext-label'});
+    t.lines.forEach(function(line,li){
+      var ts=el('tspan',{x:lp[0],y:startY+li*LINE_H,'dominant-baseline':'middle'});
+      ts.textContent=line;
+      labelEl.appendChild(ts);
+    });
+    (function(u){labelEl.addEventListener('click',function(){location.href=u;});})(t.url);
+    gW.appendChild(labelEl);
+  });
+
+  /* Responsive height fix */
+  var wrap=document.querySelector('.wheel-wrap');
+  function fixH(){if(wrap&&wrap.offsetWidth>0)wrap.style.height=wrap.offsetWidth+'px';}
+  fixH();
+  window.addEventListener('resize',fixH);
+})();
+</script>
+</body>
+</html>
