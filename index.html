@@ -122,7 +122,7 @@
     var cosA=Math.cos(aMid);
 
     var path=el('path',{d:arcPath(i,INNER_R,OUTER_R),fill:t.color,stroke:'white','stroke-width':'2.5',class:'slice'});
-    (function(u){path.addEventListener('click',function(){location.href=u;});})(t.url);
+    (function(u){path.addEventListener('click',function(){window.open(u,'_parent');});})(t.url);
     gW.appendChild(path);
 
     var sz=ICON_SIZES[i]!==undefined?ICON_SIZES[i]:ICON_SIZE;
@@ -142,7 +142,7 @@
       ts.textContent=line;
       labelEl.appendChild(ts);
     });
-    (function(u){labelEl.addEventListener('click',function(){location.href=u;});})(t.url);
+    (function(u){labelEl.addEventListener('click',function(){window.open(u,'_parent');});})(t.url);
     gW.appendChild(labelEl);
   });
 
