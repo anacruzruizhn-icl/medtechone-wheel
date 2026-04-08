@@ -146,17 +146,11 @@
     gW.appendChild(labelEl);
   });
 
-  /* Responsive height fix — posts exact wheel height to parent so iframe resizes */
-  var wrap = document.querySelector('.wheel-wrap');
-  function fixH() {
-    if (!wrap || wrap.offsetWidth === 0) return;
-    var h = wrap.offsetWidth;
-    wrap.style.height = h + 'px';
-    // Tell the parent page the exact height needed
-    window.parent.postMessage({ iframeHeight: h + 40 }, '*');
-  }
+  /* Responsive height fix */
+  var wrap=document.querySelector('.wheel-wrap');
+  function fixH(){if(wrap&&wrap.offsetWidth>0)wrap.style.height=wrap.offsetWidth+'px';}
   fixH();
-  window.addEventListener('resize', fixH);
+  window.addEventListener('resize',fixH);
 })();
 </script>
 </body>
