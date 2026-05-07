@@ -23,7 +23,7 @@
   .slice:hover { opacity: 0.82; }
   .icon-img { mix-blend-mode: screen; pointer-events: none; }
   .ext-label {
-    font-size: 12px;
+    font-size: 15px;
     font-weight: 400;
     fill: #333;
     dominant-baseline: middle;
@@ -63,7 +63,7 @@
 
   var CX=400,CY=400,OUTER_R=270,INNER_R=155,ICON_R=213,ICON_SIZE=44;
   var THEME_OUT=153,THEME_IN=95,TICK_IN=277,TICK_OUT=290;
-  var N=15,SLICE_ANG=(2*Math.PI)/N,START=-Math.PI/2,LINE_H=14;
+  var N=15,SLICE_ANG=(2*Math.PI)/N,START=-Math.PI/2,LINE_H=17;
   var ICON_SIZES={3:52,4:52};
   var NS='http://www.w3.org/2000/svg';
   var gW=document.getElementById('wheel');
@@ -136,7 +136,7 @@
     var anchor=cosA>0.15?'start':cosA<-0.15?'end':'middle';
     var totalH=(t.lines.length-1)*LINE_H;
     var startY=lp[1]-totalH/2;
-    var labelEl=el('text',{'text-anchor':anchor,'font-size':'12',class:'ext-label'});
+    var labelEl=el('text',{'text-anchor':anchor,'font-size':'15',class:'ext-label'});
     t.lines.forEach(function(line,li){
       var ts=el('tspan',{x:lp[0],y:startY+li*LINE_H,'dominant-baseline':'middle'});
       ts.textContent=line;
